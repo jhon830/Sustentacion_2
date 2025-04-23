@@ -9,3 +9,4 @@ class Vuelo:
 
     def recaudo_total(self):
         return sum(pasajero.get_valor_tiquete() for pasajero in self.pasajeros)
+
