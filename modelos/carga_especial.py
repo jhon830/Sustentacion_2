@@ -1,5 +1,3 @@
-class CargaEspecial:
-
-    def __init__(self, tipo, peso=0):
-        self.tipo = tipo
+class Equipaje:
+    def __init__(self, peso):
         self.peso = peso

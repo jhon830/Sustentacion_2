@@ -1,38 +1,66 @@
-from modelos.aerolinea import Aerolinea
 from modelos.vuelo import Vuelo
-from modelos.tiquete import Tiquete
-from modelos.pasajero import Pasajero
+from modelos.pasajero import PasajeroEconomica, PasajeroEjecutiva, PasajeroPremium
+from modelos.equipaje import Equipaje
 from modelos.carga_especial import CargaEspecial
 
-aerolinea = Aerolinea("Mi Aerolínea")
+def main():
+    try:
+        vuelo1 = Vuelo("Bogotá", "Madrid")
+        print("Vuelo creado correctamente")
 
-vuelo1 = Vuelo("Bogotá", "Madrid")
-aerolinea.agregar_vuelo(vuelo1)
+        
+        pasajero1 = PasajeroEconomica("Juan Pérez", 30, "masculino", 1000000)
+        print("PasajeroEconomica creado correctamente")
+        
+        
+        pasajero2 = PasajeroEjecutiva("Ana Gómez", 42, "femenino", 2000000)
+        print("PasajeroEjecutiva creado correctamente")
+        
+        
+        pasajero3 = PasajeroPremium("Carlos López", 35, "masculino", 3000000)
+        print("PasajeroPremium creado correctamente")
 
-pasajero1 = Pasajero("Ana", 30, "F", "Economica")
-tiquete1 = Tiquete(pasajero1, vuelo1, 2000000)
+        
+        equipaje1 = Equipaje(15)
+        pasajero1.agregar_equipaje(equipaje1)
+        print("Equipaje agregado a pasajero económico correctamente")
+        
+        equipaje2 = Equipaje(25)
+        pasajero2.agregar_equipaje(equipaje2)
+        print("Equipaje agregado a pasajero ejecutivo correctamente")
+        
+        equipaje3 = Equipaje(35)
+        pasajero3.agregar_equipaje(equipaje3)
+        print("Equipaje agregado a pasajero premium correctamente")
 
-vuelo1.vender_tiquete(tiquete1)
+        
+        carga1 = CargaEspecial("bicicleta", 10, 2000)
+        pasajero1.agregar_carga_especial(carga1)
+        print("Carga especial agregada correctamente")
 
-peso_maletas = 15
-cargas = [
-    CargaEspecial("bicicleta", 10)
-]
+       
+        vuelo1.agregar_pasajero(pasajero1)
+        vuelo1.agregar_pasajero(pasajero2)
+        vuelo1.agregar_pasajero(pasajero3)
+        print("Pasajeros agregados al vuelo correctamente")
 
-tiquete1.hacer_check_in(peso_maletas, cargas)
+        
+        print("\nInformación de pasajeros:")
+        print(f"Económica - Valor del tiquete: {pasajero1.get_valor_tiquete()} pesos")
+        print(f"Ejecutiva - Valor del tiquete: {pasajero2.get_valor_tiquete()} pesos")
+        print(f"Premium - Valor del tiquete: {pasajero3.get_valor_tiquete()} pesos")
+        
+        print("\nCostos adicionales:")
+        print(f"Económica - Costo equipaje adicional: {pasajero1.calcular_costo_equipaje_adicional()} pesos")
+        print(f"Ejecutiva - Costo equipaje adicional: {pasajero2.calcular_costo_equipaje_adicional()} pesos")
+        print(f"Premium - Costo equipaje adicional: {pasajero3.calcular_costo_equipaje_adicional()} pesos")
+        
+        print(f"\nRecaudo total del vuelo: {vuelo1.recaudo_total()} pesos")
+        
+    except Exception as e:
+        print(f"Error: {e}")
+        import traceback
+        traceback.print_exc()  
 
-trayecto, dinero = aerolinea.trayecto_mas_recaudado()
-print("Trayecto que más recaudó:", trayecto, "con", dinero, "pesos")
-
-genero = aerolinea.genero_mayoritario_a_destino("Madrid")
-print("Mayoría que viaja a Madrid:", genero)
-
-promedios = aerolinea.costo_promedio_por_trayecto()
-for trayecto, promedio in promedios:
-    print("Trayecto:", trayecto, "Promedio de precio:", promedio)
-
-total_tiquetes = aerolinea.recaudo_total_tiquetes()
-print("Total recaudado por tiquetes:", total_tiquetes)
-
-total_equipaje = aerolinea.recaudo_total_equipaje_extra()
-print("Total recaudado por equipaje extra:", total_equipaje)
+if __name__ == "__main__":
+    main()
